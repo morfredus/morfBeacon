@@ -42,6 +42,7 @@ seulement quand on en a besoin.
   "state": "ok",
   "status_port": 8787,
   "instance": "ComponentHub@fredpc",
+  "capabilities": ["storage"],
   "uptime_s": 3600,
   "ts": 1752400000
 }

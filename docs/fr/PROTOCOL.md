@@ -28,6 +28,7 @@ puisse l'implémenter sans dépendre de la bibliothèque.
   "state": "ok",
   "status_port": 8787,
   "instance": "ComponentHub@fredpc",
+  "capabilities": ["storage"],
   "uptime_s": 3600,
   "ts": 1752400000
 }
@@ -42,6 +43,7 @@ puisse l'implémenter sans dépendre de la bibliothèque.
 | `state` | string | État de santé : `ok`, `warning`, `error`, `starting`. |
 | `status_port` | number | Port HTTP du endpoint `/status` (0 = pas de serveur HTTP). |
 | `instance` | string | Identité stable `app@host` (permet plusieurs instances). |
+| `capabilities` | array | **Facultatif.** Ce que le service sait faire (identifiants stables). Absent si le service n'en déclare aucune. |
 | `uptime_s` | number | Secondes depuis le démarrage du service de présence. |
 | `ts` | number | Horodatage Unix (secondes) de l'émission. |
 
@@ -49,6 +51,45 @@ puisse l'implémenter sans dépendre de la bibliothèque.
 heartbeat par `instance` (ou `app`). Une application **sans heartbeat depuis
 ~60 s** est considérée **hors ligne**. Aucune sonde, aucune IP à connaître :
 l'adresse source du datagramme donne l'IP pour joindre `/status`.
+
+
+### Identité et capacités : deux notions distinctes
+
+Le champ `app` est un **nom**, donc modifiable. morfSystem étant distribué sous
+licence GPL, chacun est libre de renommer une application : « Mon Analyse
+Météo », « Weather Lab », « Fred Analytics ». Un consommateur qui reconnaîtrait
+ses pairs à leur nom cesserait de les voir au premier renommage.
+
+Le champ `capabilities` répond à la question **« que sait faire ce service ? »**,
+qui elle ne change pas. Ce sont des identifiants stables, en minuscules avec
+tirets bas :
+
+| Capacité | Signification |
+|---|---|
+| `advanced_analysis` | Analyses avancées sur des données historiques |
+| `notification` | Acheminement de notifications |
+| `storage` | Stockage ou synchronisation de données |
+
+**Règle pour un consommateur** : chercher une *capacité*, afficher le *nom*.
+
+```jsonc
+// OUI — resiste au renommage
+if (capabilities.contains("advanced_analysis")) afficher(app);
+
+// NON — casse des que l'utilisateur renomme son service
+if (app == "morfAnalytics") ...
+```
+
+Le champ est **facultatif** : un service qui ne déclare aucune capacité ne
+l'émet pas, et un consommateur écrit avant son introduction ignore simplement un
+champ qu'il ne connaît pas. Ajouter des capacités ne casse donc aucune
+installation existante, ce qui évite d'incrémenter la version du protocole.
+
+> **Note pour les évolutions futures.** `capabilities` a été inséré *au milieu*
+> de la structure `PresenceConfig`. Cela ne casse rien parce qu'aucun projet de
+> l'écosystème n'utilise l'initialisation par position — ce qui a été vérifié en
+> recompilant les services concernés, et non supposé. Rien ne garantit que cela
+> reste vrai : **ajouter les futurs champs à la fin** de la structure.
 
 ## 2. HTTP `/status` (détail, à la demande)
 
