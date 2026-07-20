@@ -9,11 +9,11 @@ Deux options.
 
 ### a) En sous-module / dossier voisin (recommandé pour commencer)
 
-Place `morfBeacon_travail/` à côté du projet, puis dans le `CMakeLists.txt` de
+Place `morfBeacon/` à côté du projet, puis dans le `CMakeLists.txt` de
 l'application :
 
 ```cmake
-add_subdirectory(../morfBeacon_travail morfBeacon EXTERNAL_SOURCE)
+add_subdirectory(../morfBeacon morfBeacon EXTERNAL_SOURCE)
 # ...
 target_link_libraries(ComponentHub PRIVATE morfBeacon::morfBeacon)
 ```
@@ -23,7 +23,7 @@ target_link_libraries(ComponentHub PRIVATE morfBeacon::morfBeacon)
 
 ### b) En copie interne
 
-Copie `morfBeacon_travail/` dans `third_party/morfBeacon/` du projet, puis :
+Copie `morfBeacon/` dans `third_party/morfBeacon/` du projet, puis :
 
 ```cmake
 add_subdirectory(third_party/morfBeacon)
@@ -127,7 +127,7 @@ Les deux projets définissent déjà leur version via CMake :
 Lancer l'application, puis dans un terminal :
 
 ```sh
-python morfBeacon_travail/tools/fake_dashboard.py --poll --every 10
+python morfBeacon/tools/fake_dashboard.py --poll --every 10
 ```
 
 Tu dois voir `DECOUVERT ComponentHub@...` en quelques secondes, puis les
