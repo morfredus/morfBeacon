@@ -8,7 +8,11 @@ file at the repository root).
 
 ## [Unreleased]
 
+## [0.2.1] — 2026-07-20
+
 ### Changed
+
+- Version badge in `README.md` and `README.fr.md` corrected from 0.1.0 to 0.2.0.
 - Updated integration documentation to use canonical production project paths.
 
 ## [0.2.0] — 2026-07-19
