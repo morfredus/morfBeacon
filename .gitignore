@@ -67,7 +67,13 @@ build/
 tmp/
 temp/
 .arduino/
-arduino/
+# NOT arduino/ : ce dossier est une SOURCE ici (l'emetteur ESP32
+# morfbeacon_emitter.h, source canonique des copies vendorees dans
+# MeteoHub et GatewayLab), pas un dossier de build. La regle generique
+# l'a rendu invisible : le fichier a vecu des mois sur un seul disque
+# pendant que deux projets en embarquaient des copies suivies, elles.
+# Une exception !arduino/... serait sans effet : git ne peut pas
+# reinclure un fichier dont un dossier parent est exclu.
 hardware/
 CMakeUserPresets.json
 
