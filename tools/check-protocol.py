@@ -119,6 +119,26 @@ def check_status(o, declares_web_ui):
         elif not isinstance(o[key], str):
             err.append(f"{key} : attendu une chaine")
 
+    # « proto » ne designe pas la meme chose dans les deux documents :
+    #   heartbeat  proto = "morfbeacon/1"  -> le protocole de TRANSPORT
+    #   /status    proto = "<service>/1"   -> la version de CE document
+    # morfMonitor sert « morfmonitor/1 », morfTemplateService
+    # « morftemplate/1 ». Un service qui repete « morfbeacon/1 » ici annonce un
+    # datagramme de presence la ou il sert un document de statut, et un
+    # consommateur qui se fie a ce champ pour savoir quel schema il recoit est
+    # renseigne a faux. morfSync l'a fait, en reutilisant le constructeur du
+    # heartbeat pour /status, et rien ne l'a signale : ce controle n'existait
+    # pas. Un avertissement et non une erreur -- le document reste exploitable,
+    # et une implementation tierce ne doit pas etre declaree invalide pour une
+    # convention interne au parc.
+    status_proto = o.get("proto")
+    if status_proto == PROTO:
+        warn.append(f"proto vaut '{PROTO}' : c'est le protocole du HEARTBEAT. "
+                    "Sur /status, ce champ nomme la version du document du "
+                    "service lui-meme (ex. 'morfmonitor/1').")
+    elif status_proto is not None and not isinstance(status_proto, str):
+        err.append("proto : attendu une chaine")
+
     if "uptime_s" in o and not isinstance(o["uptime_s"], int):
         err.append("uptime_s : attendu un entier")
     if "metrics" in o and not isinstance(o["metrics"], dict):
