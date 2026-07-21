@@ -2,7 +2,7 @@
 
 *Read in another language: **English** (this document) · [Français](README.fr.md).*
 
-[![Version](https://img.shields.io/badge/version-0.2.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
 ![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus)
 ![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt)
 ![Build](https://img.shields.io/badge/CMake-3.21+-064F8C?logo=cmake)
@@ -62,6 +62,36 @@ behind `/status`, queried only when needed.
 
 `GET /healthz` returns `{"status":"ok"}` (a lightweight liveness probe). The full
 protocol is specified in [docs/fr/PROTOCOL.md](docs/fr/PROTOCOL.md) *(FR)*.
+
+### Declaring a web interface
+
+An application that serves a web interface declares it by setting one field:
+
+```cpp
+cfg.webUiPath        = "/";                       // the whole declaration
+cfg.webUiLabel       = "Analyses météo";          // optional, defaults to appName
+cfg.webUiDescription = "Tendances et corrélations."; // optional
+// cfg.webUiPort     = 8080;                      // optional, defaults to statusPort
+```
+
+The capability `web_ui` is then **added automatically** to the heartbeat, and the
+detail appears in `/status`:
+
+```json
+"capabilities": ["web_ui"],
+```
+
+```json
+"web_ui": { "path": "/", "label": "Analyses météo", "port": 8799 }
+```
+
+A consumer discovers the service, sees the capability, fetches `/status` **once**
+to learn how to open it, and offers a link — **without knowing the application**.
+Adding a new service to the ecosystem therefore requires no change to any
+consumer.
+
+The capability is derived from `webUiPath`, never declared separately: the
+detail and the capability that makes it discoverable cannot drift apart.
 
 ## Integration in 5 lines
 

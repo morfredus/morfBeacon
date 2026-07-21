@@ -23,6 +23,17 @@ int main(int argc, char** argv) {
     cfg.statusPort = 8787;
     cfg.broadcastIntervalMs = 5000; // 5 s pour une demo reactive
 
+    // Declaration d'une interface Web. Renseigner le chemin suffit : la
+    // capacite « web_ui » est ajoutee automatiquement aux capacites emises dans
+    // le heartbeat, et le detail ci-dessous n'apparait que dans /status.
+    //
+    // Un observateur (morfMonitor) decouvre ainsi l'application, voit qu'elle
+    // annonce « web_ui », interroge /status une fois, et peut proposer un lien
+    // — sans rien connaitre de DemoApp.
+    cfg.webUiPath        = QStringLiteral("/");
+    cfg.webUiLabel       = QStringLiteral("Demo morfBeacon");
+    cfg.webUiDescription = QStringLiteral("Page d'exemple servie par la demo.");
+
     // Metriques factices, recalculees a chaque appel de /status.
     int scans = 0;
     morfbeacon::FunctionMetricsProvider provider(
