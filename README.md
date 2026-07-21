@@ -2,7 +2,7 @@
 
 *Read in another language: **English** (this document) · [Français](README.fr.md).*
 
-[![Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.1-blue)](CHANGELOG.md)
 ![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus)
 ![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt)
 ![Build](https://img.shields.io/badge/CMake-3.21+-064F8C?logo=cmake)
@@ -147,6 +147,37 @@ python tools/fake_dashboard.py --poll --every 10
 
 The tester shows discovery, offline transitions and metrics. It reproduces
 exactly what RaspberryDashboard does.
+
+## Checking the protocol
+
+The protocol now has **five implementations**, forced by platform and language
+boundaries: two emitters (Qt, ESP32) and three listeners (Qt, ESP32, Python).
+None can be shared with the others, so what is common is a *format* — and a
+format without verification drifts in silence. A renamed field, an integer sent
+as a string, a misspelt capability, and a consumer stops seeing a service with
+nothing to report it.
+
+`tools/check-protocol.py` is the executable reference for that format. Run on
+the local network, it validates the **real** datagrams of every implementation
+at once:
+
+```sh
+python tools/check-protocol.py              # listen 20 s, validate everything
+python tools/check-protocol.py --seconds 60
+python tools/check-protocol.py --no-pull    # skip the /status requests
+python tools/check-protocol.py --file capture.json
+```
+
+It changes nothing and emits nothing: it listens, reports, explains. Exit status
+is non-zero on any violation, so it can gate a release.
+
+Its most valuable check is not on either document but **between** them: a
+service announcing the `web_ui` capability must serve a `web_ui` block in
+`/status`. Declaring one without the other produces an interface nobody can
+open — a defect that occurred twice in the ecosystem, both times in a service
+that reimplements its own `/status` and forgot the block.
+
+Standard library only, like `fake_dashboard.py`.
 
 ## Dependencies
 

@@ -8,6 +8,37 @@ file at the repository root).
 
 ## [Unreleased]
 
+## [0.4.1] — 2026-07-21
+
+### Added
+
+- **`tools/check-protocol.py` — the executable reference for `morfbeacon/1`.**
+  The protocol now has five implementations (two emitters, three listeners)
+  that no shared code can unify, since each exists because of a platform or
+  language boundary. What is common is a format, and a format without
+  verification drifts silently.
+
+  Run on the LAN, the tool validates the **real** datagrams of every
+  implementation at once — the only vantage point from which all five are
+  visible simultaneously. It listens, reports and explains; it emits nothing and
+  changes nothing.
+
+  Its most valuable check sits **between** the two documents rather than inside
+  either: a service announcing the `web_ui` capability must serve a `web_ui`
+  block in `/status`. Declaring one without the other yields an interface nobody
+  can open — a defect that occurred twice, both times in a service that
+  reimplements its own `/status`.
+
+  `ts = 0` is accepted deliberately: an ESP32 without NTP has no clock, and 0 —
+  readable as *unknown* — is honest where a 1970 date would be taken for a
+  measurement.
+
+  Verified against the live parc (six emitters, four platforms: Qt on Linux,
+  ESP32 on two devices, all conformant) and against deliberately malformed
+  input: wrong protocol, integer sent as string, missing field, malformed
+  capability, implausible timestamp, and a service announcing `web_ui` without
+  serving it.
+
 ## [0.4.0] — 2026-07-21
 
 ### Added
