@@ -8,6 +8,21 @@ file at the repository root).
 
 ## [Unreleased]
 
+## [0.4.2] — 2026-07-22
+### Ajouté
+
+- **`check-protocol.py` valide aussi `proto` sur `/status`.** Le champ n'y nomme
+  pas le transport (`morfbeacon/1`) mais la version du document du service
+  (`morfmonitor/1`, `morfsync/1`…) ; répéter la valeur du heartbeat est signalé.
+
+### Corrigé
+
+- **L'émetteur ESP32 `arduino/morfbeacon_emitter.h` est enfin suivi.** Une règle
+  `.gitignore` (`arduino/`, prévue pour les artefacts de build) l'avalait : il
+  n'existait que sur un disque, alors que MeteoHub et GatewayLab en embarquaient
+  des copies suivies. Vérifié identique à ces copies.
+
+
 ## [0.4.1] — 2026-07-21
 
 ### Added
