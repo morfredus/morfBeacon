@@ -137,7 +137,7 @@ métriques via `/status`. Tu peux aussi tester l'endpoint directement :
 curl http://localhost:8787/status
 ```
 
-## Côté RaspberryDashboard (plus tard)
+## Côté morfDashboard (plus tard)
 
 Le dashboard passera de **sonde active** (`NETWORK_SERVICES` qui fait un
 `socket.create_connection` vers `componenthub.local:80`) à **écoute passive** du

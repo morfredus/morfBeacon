@@ -2,7 +2,7 @@
 """
 fake_dashboard.py — testeur de morfBeacon cote superviseur.
 
-Reproduit ce que fera RaspberryDashboard, sans dependance externe (stdlib
+Reproduit ce que fera morfDashboard, sans dependance externe (stdlib
 uniquement) :
 
   1. ECOUTE le heartbeat UDP en broadcast (port 45454) et tient a jour la liste

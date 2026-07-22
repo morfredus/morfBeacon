@@ -9,7 +9,7 @@
   not on what it is *called* — names are user-modifiable under the GPL.
 - **v0.1.0** — UDP heartbeat presence + HTTP `/status` endpoint + metrics
   provider interface + `fake_dashboard.py` tester. Integrated into ComponentHub
-  and SiteWatch; consumed by RaspberryDashboard.
+  and SiteWatch; consumed by morfDashboard.
 
 ## Planned
 

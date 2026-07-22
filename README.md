@@ -12,7 +12,7 @@
 
 morfBeacon lets an application (ComponentHub, SiteWatch, GatewayLab, and future
 tools) **announce its presence** on the local network and **expose its metrics**
-to a supervisor (RaspberryDashboard), in a few lines of code.
+to a supervisor (morfDashboard), in a few lines of code.
 
 ## Principle: *push presence / pull detail*
 
@@ -146,7 +146,7 @@ python tools/fake_dashboard.py --poll --every 10
 ```
 
 The tester shows discovery, offline transitions and metrics. It reproduces
-exactly what RaspberryDashboard does.
+exactly what morfDashboard does.
 
 ## Checking the protocol
 

@@ -6,7 +6,7 @@ Retour à l'[index de la documentation](README.md).
 
 morfBeacon repose sur **deux canaux aux rôles bien séparés** : un heartbeat UDP
 pour la **présence**, un endpoint HTTP pour le **détail**. Ce document spécifie
-le format de chacun, pour qu'un superviseur (RaspberryDashboard, ou tout autre)
+le format de chacun, pour qu'un superviseur (morfDashboard, ou tout autre)
 puisse l'implémenter sans dépendre de la bibliothèque.
 
 ## 1. Heartbeat UDP (présence)
