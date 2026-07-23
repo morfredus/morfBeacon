@@ -2,7 +2,7 @@
 
 *Read in another language: **English** (this document) · [Français](README.fr.md).*
 
-[![Version](https://img.shields.io/badge/version-0.4.2-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.3-blue)](CHANGELOG.md)
 ![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus)
 ![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt)
 ![Build](https://img.shields.io/badge/CMake-3.21+-064F8C?logo=cmake)
@@ -27,6 +27,15 @@ The supervisor scans nothing: it **listens** passively. No IP to know, no
 configuration, automatic discovery. An app that stops emitting for ~1 minute is
 considered offline. Detailed metrics **never** travel in the heartbeat: they stay
 behind `/status`, queried only when needed.
+
+> **Proven on a heterogeneous fleet** (23 July 2026). Distributed discovery
+> works across **Windows, Linux, Raspberry Pi and ESP32** simultaneously, with
+> **no manual configuration**: morfMonitor instances discover one another, and
+> services published by the Raspberry Pi appear automatically on Windows and
+> the other way round. No IP address is written anywhere. The independent
+> implementations of the protocol — this Qt library, the Arduino emitter,
+> morfSync in native C++ and morfDashboard in Python — interoperate on the same
+> network, which is what the checker below exists to keep true.
 
 ## The `morfbeacon/1` protocol
 

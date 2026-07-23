@@ -8,6 +8,19 @@ file at the repository root).
 
 ## [Unreleased]
 
+## [0.4.3] — 2026-07-23
+
+### Modifié
+
+- **Le protocole est documenté comme éprouvé sur un parc hétérogène.** La
+  découverte distribuée fonctionne entre Windows, Linux, Raspberry Pi et ESP32
+  simultanément, sans aucune configuration manuelle : les instances de
+  morfMonitor se découvrent mutuellement, et les services publiés par le
+  Raspberry Pi apparaissent automatiquement sur Windows comme l'inverse. Les
+  implémentations indépendantes (bibliothèque Qt, émetteur Arduino, morfSync en
+  C++ natif, morfDashboard en Python) interopèrent sur le même réseau. Le README
+  ne décrit plus une intention mais un comportement constaté.
+
 ## [0.4.2] — 2026-07-22
 ### Ajouté
 

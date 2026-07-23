@@ -2,7 +2,7 @@
 
 *Lire dans une autre langue : [English](README.md) · **Français** (ce document).*
 
-[![Version](https://img.shields.io/badge/version-0.4.2-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.4.3-blue)](CHANGELOG.md)
 ![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus)
 ![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt)
 ![Build](https://img.shields.io/badge/CMake-3.21+-064F8C?logo=cmake)
@@ -28,6 +28,15 @@ aucune configuration, découverte automatique. Une appli qui n'émet plus pendan
 ~1 minute est considérée hors ligne. Les métriques détaillées ne transitent
 **jamais** par le heartbeat : elles restent derrière `/status`, interrogé
 seulement quand on en a besoin.
+
+> **Éprouvé sur un parc hétérogène** (23 juillet 2026). La découverte
+> distribuée fonctionne entre **Windows, Linux, Raspberry Pi et ESP32**
+> simultanément, **sans aucune configuration manuelle** : les instances de
+> morfMonitor se découvrent mutuellement, et les services publiés par le
+> Raspberry Pi apparaissent automatiquement sur Windows comme l'inverse.
+> Aucune adresse IP n'est écrite nulle part. Les implémentations indépendantes
+> du protocole — cette bibliothèque Qt, l'émetteur Arduino, morfSync en C++
+> natif et morfDashboard en Python — interopèrent sur le même réseau.
 
 ## Le protocole `morfbeacon/1`
 
