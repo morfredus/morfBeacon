@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.1] — 2026-07-26
+
+### Added
+- **Arduino emitter reaches parity for the `api` field.** `buildStatusJson()`
+  in `arduino/morfbeacon_emitter.h` now accepts an optional pre-serialized
+  `apiJson` block (same spirit as the existing `metricsJson` parameter), so an
+  ESP32 can declare its business API in `/status` exactly like the Qt services
+  do via `describeService()`. The heartbeat stays untouched — the API is not a
+  capability, it lives only in the on-demand `/status` document, so a device
+  broadcasts nothing more and remains fully usable with no receiver on the LAN.
+  Backward compatible: the parameter defaults to empty, and an empty block emits
+  no `api` key. Re-vendored into MeteoHub and GatewayLab.
+
 ## [0.5.0] — 2026-07-26
 
 ### Added
