@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.5.0] — 2026-07-26
+
+### Added
+- **API declaration in `/status`** (`PresenceConfig::api`, `ApiEndpoint`). A
+  service can now list its business-API routes -- `{method, path, summary}` each,
+  under an optional `base` prefix -- completing the "announce what you do AND how
+  to call it" goal. Deliberately not a full schema: an application that wants to
+  describe parameters publishes an OpenAPI document and announces it as a web
+  interface; the beacon does not reimplement OpenAPI.
+- **Single source of truth for the announced detail** (`describeService()`, a
+  header-only function). It serialises a service's web interface and API list
+  from its `PresenceConfig`, and is called by BOTH the bundled `StatusServer`
+  and any service serving its own `/status`. Until now the C++ services
+  (morfAnalytics, morfMonitor…) hand-wrote the `web_ui` block in their own
+  `/status`, drifting from the library and from each other; from now on they
+  call this one function. Header-only, so no extra source to compile or vendor.
+- **Extensibility contract, written into `docs/fr/PROTOCOL.md`.** The heartbeat
+  is frozen and minimal; `/status` is the extensible detail document. Any future
+  fact -- backups, HTTPS certificates, storage trends, inter-service dependencies
+  -- is a new **optional top-level key** in `/status`, backward-compatible by
+  construction (unknown keys ignored, unset keys not emitted). No coordinated
+  re-vendor, and `proto` stays `morfbeacon/1`. This is what makes further
+  enrichment additive rather than a protocol redesign.
+
+### Fixed
+- **`web_ui` was emitted by `/status` but absent from the protocol
+  documentation.** PROTOCOL.md now documents both `web_ui` and `api`, with a full
+  `/status` example.
+
+### Notes
+- The heartbeat is **unchanged**: the API list, like the web-interface detail,
+  travels only over `/status`, so the periodic broadcast stays minimal.
+
 All notable changes to the project are recorded in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

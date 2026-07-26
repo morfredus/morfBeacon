@@ -106,18 +106,70 @@ Petit serveur HTTP/1.1 exposé par l'application sur `status_port`. Interrogé
   "state": "ok",
   "uptime_s": 3600,
   "metrics": { "components": 812, "projects": 14 },
+  "web_ui": {
+    "path": "/",
+    "label": "ComponentHub",
+    "port": 8787,
+    "description": "Gestion des composants"
+  },
+  "api": {
+    "base": "/api",
+    "endpoints": [
+      { "method": "GET",  "path": "/api/components", "summary": "liste des composants" },
+      { "method": "POST", "path": "/api/components", "summary": "ajoute un composant" }
+    ]
+  },
   "ts": 1752400000
 }
 ```
 
 - `metrics` : objet **libre**, propre à l'application (compteurs, files, etc.).
   Le superviseur l'affiche sans en connaître la structure.
+- `web_ui` : **facultatif**, présent seulement si l'application déclare une
+  interface web (elle annonce alors la capacité `web_ui` dans le heartbeat).
+  Donne de quoi ouvrir l'interface : `path`, `label`, `port` (le port de
+  l'interface, en général celui de `/status`), `description` facultative.
+- `api` : **facultatif**, la liste des routes de l'API métier. `base` est un
+  préfixe indicatif ; chaque `endpoint` porte `method`, `path` et un `summary`
+  facultatif. Volontairement pas un schéma complet : une application qui veut
+  décrire ses paramètres publie un document OpenAPI et l'annonce comme une
+  interface web. Absent si aucune API n'est déclarée.
 - Réponse : `Content-Type: application/json`, en-tête `Access-Control-Allow-Origin: *`
   (pour un futur tableau de bord web), `Connection: close`.
 
 **`GET /healthz`** → `{"status":"ok"}` — sonde de vie légère.
 
 Toute autre route → `404`. Toute méthode autre que `GET` → `405`.
+
+### Pourquoi ces détails sont dans `/status` et non le heartbeat
+
+Le heartbeat annonce la **présence** et de quoi joindre le service (port,
+capacités) ; le **détail** — interface web, liste d'API, métriques — vit dans
+`/status`, interrogé à la demande. Un consommateur ne poll `/status` que pour ce
+qui l'intéresse (une fiche ouverte, un service qui déclare `web_ui`), et le
+trafic périodique diffusé par chaque machine reste minimal, quelle que soit la
+richesse des services.
+
+### Contrat d'extensibilité — pourquoi le protocole ne bougera pas
+
+Cette répartition est ce qui permet d'enrichir l'écosystème **sans jamais casser
+le protocole** :
+
+1. **Le heartbeat est gelé et minimal.** On n'y ajoute pas de métadonnées par
+   fonction. Sa forme (`proto`, `app`, `host`, `version`, `state`,
+   `status_port`, `instance`, `capabilities`, `uptime_s`, `ts`) est stable.
+2. **`/status` est le document de détail extensible.** Toute évolution future —
+   sauvegardes, certificats HTTPS, tendances de stockage, dépendances entre
+   services — sera une **nouvelle clé optionnelle de premier niveau** dans
+   `/status`.
+3. **Ajouter une clé est rétrocompatible.** Un consommateur qui l'ignore n'est
+   pas affecté ; un producteur qui ne la renseigne pas ne l'émet pas. Aucune
+   resynchronisation coordonnée du parc n'est donc nécessaire : chaque projet
+   reprend la nouvelle copie vendorée quand il a besoin du champ.
+
+Conséquence : `proto` reste `morfbeacon/1`. On n'incrémente le protocole que si
+la forme du **heartbeat** change de façon incompatible — ce que ce contrat
+rend justement inutile.
 
 ## 3. Convention de ports
 
