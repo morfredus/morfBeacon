@@ -1,19 +1,19 @@
 # Changelog
 
-## [0.5.1] — 2026-07-26
+## [0.5.1] - 2026-07-26
 
 ### Added
 - **Arduino emitter reaches parity for the `api` field.** `buildStatusJson()`
   in `arduino/morfbeacon_emitter.h` now accepts an optional pre-serialized
   `apiJson` block (same spirit as the existing `metricsJson` parameter), so an
   ESP32 can declare its business API in `/status` exactly like the Qt services
-  do via `describeService()`. The heartbeat stays untouched — the API is not a
+  do via `describeService()`. The heartbeat stays untouched - the API is not a
   capability, it lives only in the on-demand `/status` document, so a device
   broadcasts nothing more and remains fully usable with no receiver on the LAN.
   Backward compatible: the parameter defaults to empty, and an empty block emits
   no `api` key. Re-vendored into MeteoHub and GatewayLab.
 
-## [0.5.0] — 2026-07-26
+## [0.5.0] - 2026-07-26
 
 ### Added
 - **API declaration in `/status`** (`PresenceConfig::api`, `ApiEndpoint`). A
@@ -54,7 +54,7 @@ file at the repository root).
 
 ## [Unreleased]
 
-## [0.4.3] — 2026-07-23
+## [0.4.3] - 2026-07-23
 
 ### Modifié
 
@@ -67,7 +67,7 @@ file at the repository root).
   C++ natif, morfDashboard en Python) interopèrent sur le même réseau. Le README
   ne décrit plus une intention mais un comportement constaté.
 
-## [0.4.2] — 2026-07-22
+## [0.4.2] - 2026-07-22
 ### Ajouté
 
 - **`check-protocol.py` valide aussi `proto` sur `/status`.** Le champ n'y nomme
@@ -82,29 +82,29 @@ file at the repository root).
   des copies suivies. Vérifié identique à ces copies.
 
 
-## [0.4.1] — 2026-07-21
+## [0.4.1] - 2026-07-21
 
 ### Added
 
-- **`tools/check-protocol.py` — the executable reference for `morfbeacon/1`.**
+- **`tools/check-protocol.py` - the executable reference for `morfbeacon/1`.**
   The protocol now has five implementations (two emitters, three listeners)
   that no shared code can unify, since each exists because of a platform or
   language boundary. What is common is a format, and a format without
   verification drifts silently.
 
   Run on the LAN, the tool validates the **real** datagrams of every
-  implementation at once — the only vantage point from which all five are
+  implementation at once - the only vantage point from which all five are
   visible simultaneously. It listens, reports and explains; it emits nothing and
   changes nothing.
 
   Its most valuable check sits **between** the two documents rather than inside
   either: a service announcing the `web_ui` capability must serve a `web_ui`
   block in `/status`. Declaring one without the other yields an interface nobody
-  can open — a defect that occurred twice, both times in a service that
+  can open - a defect that occurred twice, both times in a service that
   reimplements its own `/status`.
 
-  `ts = 0` is accepted deliberately: an ESP32 without NTP has no clock, and 0 —
-  readable as *unknown* — is honest where a 1970 date would be taken for a
+  `ts = 0` is accepted deliberately: an ESP32 without NTP has no clock, and 0 -
+  readable as *unknown* - is honest where a 1970 date would be taken for a
   measurement.
 
   Verified against the live parc (six emitters, four platforms: Qt on Linux,
@@ -113,7 +113,7 @@ file at the repository root).
   capability, implausible timestamp, and a service announcing `web_ui` without
   serving it.
 
-## [0.4.0] — 2026-07-21
+## [0.4.0] - 2026-07-21
 
 ### Added
 
@@ -123,7 +123,7 @@ file at the repository root).
   is discovered by the same mechanism.
 
   Until now MeteoHub and GatewayLab were found by TCP probe, which assumes their
-  mDNS name is known in advance — the opposite of discovery, and the reason
+  mDNS name is known in advance - the opposite of discovery, and the reason
   static lists were still needed in `morfsystem.json`.
 
   `buildStatusJson()` produces the matching `/status` document, so an embedded
@@ -133,15 +133,15 @@ file at the repository root).
   the platform boundary makes this duplication unavoidable, exactly as it does
   for the C++ listener in morfMonitor and the Python one in RaspberryDashboard.
   What is shared is the **protocol**, not the code. Both emitters live in this
-  repository on purpose — reading one beside the other is the only guard against
+  repository on purpose - reading one beside the other is the only guard against
   a silent divergence of the format, and any change to the datagram must touch
   both files.
 
-## [0.3.0] — 2026-07-21
+## [0.3.0] - 2026-07-21
 
 ### Added
 
-- **`web_ui` capability — an application can declare that it exposes a web
+- **`web_ui` capability - an application can declare that it exposes a web
   interface**, so a consumer can offer a link to it without knowing the
   application at all. This is the capability matching the library was designed
   for, finally exercised: a consumer looks for what a service *can do*, never
@@ -166,7 +166,7 @@ file at the repository root).
   drift apart. Declaring one without the other would produce either an
   undiscoverable interface or a link to nothing.
 
-- `PresenceConfig::kCapabilityWebUi` — use the constant rather than the string,
+- `PresenceConfig::kCapabilityWebUi` - use the constant rather than the string,
   so producer and consumer cannot disagree on spelling.
 
 ### Compatibility
@@ -178,20 +178,20 @@ declaring no interface emits exactly the datagram it emitted before. Consumers
 unaware of `web_ui` ignore an unknown capability, as the `capabilities`
 mechanism was designed for.
 
-## [0.2.1] — 2026-07-20
+## [0.2.1] - 2026-07-20
 
 ### Changed
 
 - Version badge in `README.md` and `README.fr.md` corrected from 0.1.0 to 0.2.0.
 - Updated integration documentation to use canonical production project paths.
 
-## [0.2.0] — 2026-07-19
+## [0.2.0] - 2026-07-19
 
 ### Added
 - **`capabilities` field in the UDP heartbeat** (`PresenceConfig::capabilities`).
   Declares what a service *can do*, as opposed to what it *is called*.
 
-  The `app` name is user-modifiable — morfSystem is GPL, anyone may rename an
+  The `app` name is user-modifiable - morfSystem is GPL, anyone may rename an
   application. A consumer matching its peers by name stops seeing them at the
   first rename. Matching a stable capability (`advanced_analysis`,
   `notification`, `storage`…) and merely *displaying* the announced name keeps
@@ -202,7 +202,7 @@ mechanism was designed for.
   Adding it therefore breaks no existing installation, and the protocol version
   stays `morfbeacon/1`.
 
-### Compatibility — verified, not assumed
+### Compatibility - verified, not assumed
 
 `capabilities` was inserted **in the middle** of the `PresenceConfig` struct,
 which would break any consumer using positional aggregate initialisation. Every
@@ -210,17 +210,17 @@ consumer in the ecosystem was checked and re-tested:
 
 | Check | Result |
 |---|---|
-| How the 5 consumers build `PresenceConfig` | Always default-construct + field assignment — no positional init to break |
+| How the 5 consumers build `PresenceConfig` | Always default-construct + field assignment - no positional init to break |
 | morfNotify rebuilt against 0.2.0 | Builds |
 | morfSensor rebuilt against 0.2.0 | Builds |
-| Any consumer parsing heartbeats | None — they only emit; the extra JSON field cannot break a reader |
+| Any consumer parsing heartbeats | None - they only emit; the extra JSON field cannot break a reader |
 | Vendored copies in consumer repos | Untouched; they keep working until they choose to re-sync |
 
 Prefer **appending** new fields at the end of `PresenceConfig` in future
 releases: positional initialisation happens not to be used today, but nothing
 guarantees it stays that way.
 
-## [0.1.0] — 2026-07-13
+## [0.1.0] - 2026-07-13
 
 ### Added
 - First release of **morfBeacon**, the shared LAN-supervision library.

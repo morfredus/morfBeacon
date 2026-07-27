@@ -33,8 +33,8 @@ behind `/status`, queried only when needed.
 > **no manual configuration**: morfMonitor instances discover one another, and
 > services published by the Raspberry Pi appear automatically on Windows and
 > the other way round. No IP address is written anywhere. The independent
-> implementations of the protocol — this Qt library, the Arduino emitter,
-> morfSync in native C++ and morfDashboard in Python — interoperate on the same
+> implementations of the protocol - this Qt library, the Arduino emitter,
+> morfSync in native C++ and morfDashboard in Python - interoperate on the same
 > network, which is what the checker below exists to keep true.
 
 ## The `morfbeacon/1` protocol
@@ -95,7 +95,7 @@ detail appears in `/status`:
 ```
 
 A consumer discovers the service, sees the capability, fetches `/status` **once**
-to learn how to open it, and offers a link — **without knowing the application**.
+to learn how to open it, and offers a link - **without knowing the application**.
 Adding a new service to the ecosystem therefore requires no change to any
 consumer.
 
@@ -161,7 +161,7 @@ exactly what morfDashboard does.
 
 The protocol now has **five implementations**, forced by platform and language
 boundaries: two emitters (Qt, ESP32) and three listeners (Qt, ESP32, Python).
-None can be shared with the others, so what is common is a *format* — and a
+None can be shared with the others, so what is common is a *format* - and a
 format without verification drifts in silence. A renamed field, an integer sent
 as a string, a misspelt capability, and a consumer stops seeing a service with
 nothing to report it.
@@ -183,14 +183,14 @@ is non-zero on any violation, so it can gate a release.
 Its most valuable check is not on either document but **between** them: a
 service announcing the `web_ui` capability must serve a `web_ui` block in
 `/status`. Declaring one without the other produces an interface nobody can
-open — a defect that occurred twice in the ecosystem, both times in a service
+open - a defect that occurred twice in the ecosystem, both times in a service
 that reimplements its own `/status` and forgot the block.
 
 Standard library only, like `fake_dashboard.py`.
 
 ## Dependencies
 
-Qt 6 (**Core** + **Network** only — no Widgets, usable in a headless service).
+Qt 6 (**Core** + **Network** only - no Widgets, usable in a headless service).
 C++17, CMake ≥ 3.21.
 
 ## Documentation

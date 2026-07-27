@@ -1,4 +1,4 @@
-# Architecture — morfBeacon
+# Architecture - morfBeacon
 
 Retour à l'[index de la documentation](README.md).
 
@@ -68,5 +68,5 @@ et n'exposer qu'un instantané.
 
 Aucun code spécifique à une plateforme ni à une architecture : `QUdpSocket`,
 `QTcpServer`, `QNetworkInterface`, `QHostInfo` sont multiplateformes. Le
-comportement est identique sous Windows, Linux x64 et Raspberry Pi (ARM64) — Qt
+comportement est identique sous Windows, Linux x64 et Raspberry Pi (ARM64) - Qt
 active notamment `SO_BROADCAST` de lui-même.

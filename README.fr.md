@@ -35,8 +35,8 @@ seulement quand on en a besoin.
 > morfMonitor se découvrent mutuellement, et les services publiés par le
 > Raspberry Pi apparaissent automatiquement sur Windows comme l'inverse.
 > Aucune adresse IP n'est écrite nulle part. Les implémentations indépendantes
-> du protocole — cette bibliothèque Qt, l'émetteur Arduino, morfSync en C++
-> natif et morfDashboard en Python — interopèrent sur le même réseau.
+> du protocole - cette bibliothèque Qt, l'émetteur Arduino, morfSync en C++
+> natif et morfDashboard en Python - interopèrent sur le même réseau.
 
 ## Le protocole `morfbeacon/1`
 
@@ -130,17 +130,17 @@ Il reproduit exactement ce que fait morfDashboard.
 
 ## Dépendances
 
-Qt 6 (**Core** + **Network** uniquement — pas de Widgets, utilisable dans un
+Qt 6 (**Core** + **Network** uniquement - pas de Widgets, utilisable dans un
 service sans interface). C++17, CMake ≥ 3.21.
 
 ## Documentation
 
--   [docs/fr/PROTOCOL.md](docs/fr/PROTOCOL.md) — le protocole `morfbeacon/1` (heartbeat, `/status`, ports)
--   [docs/fr/ARCHITECTURE.md](docs/fr/ARCHITECTURE.md) — les classes (Heartbeat, StatusServer, fournisseurs, PresenceService)
--   [docs/fr/INTEGRATION.md](docs/fr/INTEGRATION.md) — intégrer morfBeacon dans une application
--   [CHANGELOG.md](CHANGELOG.md) — historique des versions
--   [ROADMAP.md](ROADMAP.md) — évolutions prévues
--   [CONTRIBUTING.md](CONTRIBUTING.md) — guide de contribution
+-   [docs/fr/PROTOCOL.md](docs/fr/PROTOCOL.md) - le protocole `morfbeacon/1` (heartbeat, `/status`, ports)
+-   [docs/fr/ARCHITECTURE.md](docs/fr/ARCHITECTURE.md) - les classes (Heartbeat, StatusServer, fournisseurs, PresenceService)
+-   [docs/fr/INTEGRATION.md](docs/fr/INTEGRATION.md) - intégrer morfBeacon dans une application
+-   [CHANGELOG.md](CHANGELOG.md) - historique des versions
+-   [ROADMAP.md](ROADMAP.md) - évolutions prévues
+-   [CONTRIBUTING.md](CONTRIBUTING.md) - guide de contribution
 
 > Index : [`docs/fr/`](docs/fr/README.md) (français) · [`docs/en/`](docs/en/README.md) (anglais).
 

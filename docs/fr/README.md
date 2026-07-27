@@ -10,7 +10,7 @@ Bibliothèque C++ commune de supervision LAN (heartbeat UDP + endpoint HTTP
 
 | Document | Contenu |
 |---|---|
-| [Protocole `morfbeacon/1`](PROTOCOL.md) | Le format sur le fil (heartbeat UDP, `/status`, `/healthz`, ports) — pour implémenter un superviseur. |
+| [Protocole `morfbeacon/1`](PROTOCOL.md) | Le format sur le fil (heartbeat UDP, `/status`, `/healthz`, ports) - pour implémenter un superviseur. |
 | [Architecture](ARCHITECTURE.md) | Les classes (Heartbeat, StatusServer, IMetricsProvider, PresenceService) et le fil d'exécution. |
 | [Intégration](INTEGRATION.md) | Brancher morfBeacon dans une application Qt (CMake + code). |
 

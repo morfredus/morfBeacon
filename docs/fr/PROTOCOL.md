@@ -67,16 +67,17 @@ tirets bas :
 | Capacité | Signification |
 |---|---|
 | `advanced_analysis` | Analyses avancées sur des données historiques |
+| `collection` | Réception d'un contrat `morfcollect`, collectes planifiées et conservation locale des objets récupérés (morfCollector) |
 | `notification` | Acheminement de notifications |
 | `storage` | Stockage ou synchronisation de données |
 
 **Règle pour un consommateur** : chercher une *capacité*, afficher le *nom*.
 
 ```jsonc
-// OUI — resiste au renommage
+// OUI - resiste au renommage
 if (capabilities.contains("advanced_analysis")) afficher(app);
 
-// NON — casse des que l'utilisateur renomme son service
+// NON - casse des que l'utilisateur renomme son service
 if (app == "morfAnalytics") ...
 ```
 
@@ -87,7 +88,7 @@ installation existante, ce qui évite d'incrémenter la version du protocole.
 
 > **Note pour les évolutions futures.** `capabilities` a été inséré *au milieu*
 > de la structure `PresenceConfig`. Cela ne casse rien parce qu'aucun projet de
-> l'écosystème n'utilise l'initialisation par position — ce qui a été vérifié en
+> l'écosystème n'utilise l'initialisation par position - ce qui a été vérifié en
 > recompilant les services concernés, et non supposé. Rien ne garantit que cela
 > reste vrai : **ajouter les futurs champs à la fin** de la structure.
 
@@ -137,20 +138,20 @@ Petit serveur HTTP/1.1 exposé par l'application sur `status_port`. Interrogé
 - Réponse : `Content-Type: application/json`, en-tête `Access-Control-Allow-Origin: *`
   (pour un futur tableau de bord web), `Connection: close`.
 
-**`GET /healthz`** → `{"status":"ok"}` — sonde de vie légère.
+**`GET /healthz`** → `{"status":"ok"}` - sonde de vie légère.
 
 Toute autre route → `404`. Toute méthode autre que `GET` → `405`.
 
 ### Pourquoi ces détails sont dans `/status` et non le heartbeat
 
 Le heartbeat annonce la **présence** et de quoi joindre le service (port,
-capacités) ; le **détail** — interface web, liste d'API, métriques — vit dans
+capacités) ; le **détail** - interface web, liste d'API, métriques - vit dans
 `/status`, interrogé à la demande. Un consommateur ne poll `/status` que pour ce
 qui l'intéresse (une fiche ouverte, un service qui déclare `web_ui`), et le
 trafic périodique diffusé par chaque machine reste minimal, quelle que soit la
 richesse des services.
 
-### Contrat d'extensibilité — pourquoi le protocole ne bougera pas
+### Contrat d'extensibilité - pourquoi le protocole ne bougera pas
 
 Cette répartition est ce qui permet d'enrichir l'écosystème **sans jamais casser
 le protocole** :
@@ -158,9 +159,9 @@ le protocole** :
 1. **Le heartbeat est gelé et minimal.** On n'y ajoute pas de métadonnées par
    fonction. Sa forme (`proto`, `app`, `host`, `version`, `state`,
    `status_port`, `instance`, `capabilities`, `uptime_s`, `ts`) est stable.
-2. **`/status` est le document de détail extensible.** Toute évolution future —
+2. **`/status` est le document de détail extensible.** Toute évolution future -
    sauvegardes, certificats HTTPS, tendances de stockage, dépendances entre
-   services — sera une **nouvelle clé optionnelle de premier niveau** dans
+   services - sera une **nouvelle clé optionnelle de premier niveau** dans
    `/status`.
 3. **Ajouter une clé est rétrocompatible.** Un consommateur qui l'ignore n'est
    pas affecté ; un producteur qui ne la renseigne pas ne l'émet pas. Aucune
@@ -168,7 +169,7 @@ le protocole** :
    reprend la nouvelle copie vendorée quand il a besoin du champ.
 
 Conséquence : `proto` reste `morfbeacon/1`. On n'incrémente le protocole que si
-la forme du **heartbeat** change de façon incompatible — ce que ce contrat
+la forme du **heartbeat** change de façon incompatible - ce que ce contrat
 rend justement inutile.
 
 ## 3. Convention de ports

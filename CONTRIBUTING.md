@@ -40,7 +40,7 @@ You should see discovery, `/status` metrics and offline transitions.
 
 The wire format is specified in [docs/fr/PROTOCOL.md](docs/fr/PROTOCOL.md). Any
 **incompatible** change to the heartbeat or `/status` format must bump the
-protocol version (`morfbeacon/2`) and be documented there — supervisors ignore
+protocol version (`morfbeacon/2`) and be documented there - supervisors ignore
 protocols they don't understand.
 
 ## 5. Documentation language

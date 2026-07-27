@@ -37,7 +37,7 @@ build autonome de morfBeacon).
 
 Le seul travail spécifique à l'appli : décrire ce qu'elle expose. Deux façons.
 
-### Simple — une lambda (`FunctionMetricsProvider`)
+### Simple - une lambda (`FunctionMetricsProvider`)
 
 ```cpp
 #include <morfbeacon/IMetricsProvider.h>
@@ -54,10 +54,10 @@ morfbeacon::FunctionMetricsProvider provider(
     });
 ```
 
-### Structuré — une sous-classe (`IMetricsProvider`)
+### Structuré - une sous-classe (`IMetricsProvider`)
 
 Pratique si la collecte est plus riche (à ranger dans `src/platform/` pour
-ComponentHub, `src/core/` pour SiteWatch — la couche qui ne dépend pas de l'UI) :
+ComponentHub, `src/core/` pour SiteWatch - la couche qui ne dépend pas de l'UI) :
 
 ```cpp
 class AppMetrics : public morfbeacon::IMetricsProvider {
