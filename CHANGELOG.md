@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.6.0] - 2026-08-13
+
+### Added
+- **Hardware state contract.** `IMetricsProvider` gains an optional
+  `hardware()` method (default `{}`) exposed in `/status` next to `metrics`.
+  It lets a service that manages a device report, in one place, whether the
+  hardware is `present`, `none` (nothing expected here - a valid setup, not a
+  fault) or `degraded` (expected but absent/faulty), plus a human `label` and
+  optional `expected`/`present` counts. The service stays the sole authority on
+  its hardware; a supervisor (morfMonitor) displays this block without ever
+  inferring presence itself. Additive and backward compatible: a service that
+  does not override `hardware()` emits nothing.
+
 ## [0.5.1] - 2026-07-26
 
 ### Added
