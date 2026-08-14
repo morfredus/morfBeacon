@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.1] - 2026-08-14
+
+### Corrigé
+
+- **Troncature des grandes réponses `/status`** dans `StatusServer`. Le serveur
+  écrivait la réponse puis fermait la connexion (`disconnectFromHost`) sans drainer
+  le tampon d'écriture : un `/status` riche (agrégation des capacités du parc)
+  dépassant la taille du tampon socket (~20 Ko constaté) arrivait tronqué côté client.
+  On attend désormais que `bytesToWrite()` retombe à zéro (via `waitForBytesWritten`,
+  avec délai de garde) avant de fermer. Même classe de bug que le correctif appliqué
+  au `HttpServer` du patron `morfTemplateService` ; à re-vendorer dans les services.
+
 ## [0.6.0] - 2026-08-13
 
 ### Added
