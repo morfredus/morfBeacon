@@ -2,7 +2,7 @@
 
 *Lire dans une autre langue : [English](README.md) · **Français** (ce document).*
 
-[![Version](https://img.shields.io/badge/version-0.6.1-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-0.7.0-blue)](CHANGELOG.md)
 ![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus)
 ![Qt](https://img.shields.io/badge/Qt-6-41CD52?logo=qt)
 ![Build](https://img.shields.io/badge/CMake-3.21+-064F8C?logo=cmake)
@@ -47,6 +47,7 @@ seulement quand on en a besoin.
   "proto": "morfbeacon/1",
   "app": "ComponentHub",
   "host": "fredpc",
+  "role": "host",
   "version": "1.6.0",
   "state": "ok",
   "status_port": 8787,
@@ -57,12 +58,17 @@ seulement quand on en a besoin.
 }
 ```
 
+`role` vaut `"host"` (machine généraliste hébergeant des services, la valeur par
+défaut) ou `"device"` (équipement autonome comme un capteur ESP32). Additif et
+rétrocompatible : une annonce sans `role` est lue comme `"host"`.
+
 **HTTP `GET /status`** (sur `status_port`) :
 
 ```json
 {
   "app": "ComponentHub",
   "host": "fredpc",
+  "role": "host",
   "version": "1.6.0",
   "state": "ok",
   "uptime_s": 3600,

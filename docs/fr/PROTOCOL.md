@@ -24,6 +24,7 @@ puisse l'implémenter sans dépendre de la bibliothèque.
   "proto": "morfbeacon/1",
   "app": "ComponentHub",
   "host": "fredpc",
+  "role": "host",
   "version": "1.6.0",
   "state": "ok",
   "status_port": 8787,
@@ -39,6 +40,7 @@ puisse l'implémenter sans dépendre de la bibliothèque.
 | `proto` | string | Version du protocole. Toujours `morfbeacon/<n>`. **Ignorer** un datagramme dont le préfixe n'est pas `morfbeacon/`. |
 | `app` | string | Nom de l'application (identifiant logique). |
 | `host` | string | Nom d'hôte de la machine. |
+| `role` | string | **Facultatif.** Rôle de l'émetteur : `host` (machine généraliste hébergeant des services, défaut) ou `device` (équipement autonome, ESP32, capteur). Absent => `host`. |
 | `version` | string | Version de l'application. |
 | `state` | string | État de santé : `ok`, `warning`, `error`, `starting`. |
 | `status_port` | number | Port HTTP du endpoint `/status` (0 = pas de serveur HTTP). |
@@ -157,8 +159,9 @@ Cette répartition est ce qui permet d'enrichir l'écosystème **sans jamais cas
 le protocole** :
 
 1. **Le heartbeat est gelé et minimal.** On n'y ajoute pas de métadonnées par
-   fonction. Sa forme (`proto`, `app`, `host`, `version`, `state`,
-   `status_port`, `instance`, `capabilities`, `uptime_s`, `ts`) est stable.
+   fonction. Sa forme (`proto`, `app`, `host`, `role`, `version`, `state`,
+   `status_port`, `instance`, `capabilities`, `uptime_s`, `ts`) est stable ;
+   `role` a été ajouté de façon additive (absent => `host`).
 2. **`/status` est le document de détail extensible.** Toute évolution future -
    sauvegardes, certificats HTTPS, tendances de stockage, dépendances entre
    services - sera une **nouvelle clé optionnelle de premier niveau** dans

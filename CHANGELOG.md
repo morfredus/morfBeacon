@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.7.0] - 2026-08-16
+
+### Added
+
+- **Rôle de l'émetteur dans le parc.** Le heartbeat et `/status` portent désormais
+  un champ `role` : `"host"` (machine généraliste hébergeant des services) ou
+  `"device"` (équipement autonome type ESP32, capteur). `PresenceConfig` gagne le
+  champ `role` (défaut `"host"`) et les constantes `kRoleHost` / `kRoleDevice`.
+  Additif et rétrocompatible : une annonce sans `role` est interprétée comme
+  `"host"`, le comportement historique. Ce rôle permet à un consommateur
+  (morfMonitor) de distinguer la disparition simultanée de tous les services d'un
+  poste (« machine hors ligne ») de l'absence d'un équipement, et à un tableau de
+  bord local (morfDashboard) de définir « local » comme *ma machine + les
+  équipements du parc*, sans confondre un capteur avec un autre poste.
+
 ## [0.6.1] - 2026-08-14
 
 ### Corrigé
