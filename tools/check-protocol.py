@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-check-protocol.py — verifie que le protocole morfbeacon/1 est respecte.
+check-protocol.py - verifie que le protocole morfbeacon/1 est respecte.
 
 Pourquoi cet outil existe
 -------------------------
@@ -17,7 +17,7 @@ champ renomme, un entier passe en chaine, une capacite mal orthographiee, et un
 consommateur cesse de voir un service sans que rien ne le signale.
 
 Ce script est la reference executable de ce format. Lance sur le reseau local,
-il valide les datagrammes REELS de toutes les implementations a la fois — c'est
+il valide les datagrammes REELS de toutes les implementations a la fois - c'est
 le seul point d'ou l'on voit les cinq en meme temps.
 
 Il ne modifie rien et n'emet rien : il ecoute, constate, explique.
@@ -79,7 +79,7 @@ def check_heartbeat(o):
         err.append(f"uptime_s negatif : {uptime}")
 
     # ts : 0 est LEGITIME. Un ESP32 sans NTP n'a pas d'horloge, et emettre 0
-    # — lisible comme « inconnu » — vaut mieux qu'une date de 1970 qu'un
+    # - lisible comme « inconnu » - vaut mieux qu'une date de 1970 qu'un
     # consommateur prendrait pour une mesure.
     ts = need("ts", int, "entier")
     if ts is not None and ts != 0 and ts < 1_600_000_000:

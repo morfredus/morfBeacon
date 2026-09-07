@@ -1,5 +1,38 @@
 # Changelog
 
+## [0.7.2] - 2026-09-27
+
+### Fixed
+
+- **Obsolete port tables.** `docs/fr/INTEGRATION.md` and `docs/fr/PROTOCOL.md` still
+  proposed ComponentHub 8787, SiteWatch 8788, GatewayLab 8789. They now point to the
+  authoritative `ports.allocations` of `morfTools/ecosystem.json` (desktop apps in
+  8880-8899) and recall that 8787, the library default, stays reserved.
+- **"morfDashboard (later)" section** described passive heartbeat listening as a
+  future `presence.py`; it has existed for a long time (`beacon_listener.py`,
+  morfMonitor's registry). Rewritten as the current state.
+
+### Changed
+
+- Em dashes replaced by `-` in the project's own files (no change under `include/`
+  or `src/`).
+
+## [0.7.1] - 2026-09-07
+
+### Fixed
+
+- **The `/status` server no longer starves the heartbeat while replying to a slow
+  client.** `reply()` ended with a synchronous `while (bytesToWrite) waitForBytesWritten(2000)`
+  drain that blocked the single event loop until a slow peer had absorbed a rich
+  `/status` (~20 KB). On a degraded link the block lasted, and during it the beacon
+  `QTimer` (same event loop) could not emit: the service silently stopped announcing
+  its presence while it was in fact running, triggering false "service down" alerts
+  across the parc. Replies now close **asynchronously** (`disconnectFromHost()` drains
+  in the background, then `disconnected` → `deleteLater`), with a 10 s guard that
+  aborts a dead client's socket so half-closed sockets never accumulate during a
+  network degradation. **Vendored copies must be resynced** (`sync-morf`) and the
+  consuming services rebuilt for the fix to reach them.
+
 ## [0.7.0] - 2026-08-16
 
 ### Added

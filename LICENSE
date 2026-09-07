@@ -1,4 +1,4 @@
-morfBeacon — LAN supervision library for desktop apps (UDP heartbeat + HTTP /status)
+morfBeacon - LAN supervision library for desktop apps (UDP heartbeat + HTTP /status)
 Copyright (C) 2026 morfredus (Frederic Biron)
 SPDX-License-Identifier: GPL-3.0-only
 

@@ -102,13 +102,20 @@ automatiquement avec la fenêtre. Rien à faire à la fermeture.
 - **UDP `45454`** : identique pour **toutes** les applis (c'est le canal commun
   d'annonce). Ne pas changer, sauf pour isoler un réseau.
 - **HTTP `status_port`** : **un port distinct par application** sur une même
-  machine, sinon la seconde ne pourra pas ouvrir le sien. Convention proposée :
+  machine, sinon la seconde ne pourra pas ouvrir le sien. Le registre qui fait
+  autorité est `ports.allocations` de `morfTools/ecosystem.json` (vérifié par
+  `morf doctor`) : services du parc dans le bloc 8787-8799, applications de bureau
+  dans la plage 8880-8899. Par exemple :
 
   | Application   | status_port |
   |---------------|-------------|
-  | ComponentHub  | 8787        |
-  | SiteWatch     | 8788        |
-  | GatewayLab    | 8789        |
+  | ComponentHub  | 8880        |
+  | SiteWatch     | 8881        |
+  | PhotoHub      | 8882        |
+  | LanAtlas      | 8883        |
+
+  `8787` est le défaut de `PresenceConfig::statusPort` : il reste réservé et
+  aucune application ne doit le garder.
 
   Le heartbeat annonce le port réellement ouvert ; si le port est occupé,
   `start()` renvoie `false` et l'appli reste tout de même annoncée (sans détail).
@@ -137,11 +144,10 @@ métriques via `/status`. Tu peux aussi tester l'endpoint directement :
 curl http://localhost:8787/status
 ```
 
-## Côté morfDashboard (plus tard)
+## Côté consommateurs
 
-Le dashboard passera de **sonde active** (`NETWORK_SERVICES` qui fait un
-`socket.create_connection` vers `componenthub.local:80`) à **écoute passive** du
-heartbeat, exactement comme `tools/fake_dashboard.py`. La logique d'écoute UDP +
-interrogation `/status` de ce script est directement réutilisable dans un module
-`presence.py`. Aucune modification ne sera nécessaire côté applications quand un
-nouvel outil rejoindra le parc : il suffira qu'il intègre morfBeacon.
+Les superviseurs **écoutent** le heartbeat au lieu de sonder chaque application,
+exactement comme `tools/fake_dashboard.py` : morfDashboard le fait dans
+`beacon_listener.py`, et morfMonitor tient le registre des machines et services
+vus. Aucune modification n'est donc nécessaire côté superviseurs quand un nouvel
+outil rejoint le parc : il suffit qu'il intègre morfBeacon.

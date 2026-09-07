@@ -181,11 +181,15 @@ rend justement inutile.
 - **HTTP `status_port`** : **un port distinct par application** sur une même
   machine.
 
+  Les ports sont attribués dans `ports.allocations` de `morfTools/ecosystem.json`
+  (services : 8787-8799 ; applications de bureau : 8880-8899). Par exemple :
+
   | Application | status_port |
   |---|---|
-  | ComponentHub | 8787 |
-  | SiteWatch | 8788 |
-  | GatewayLab | 8789 |
+  | ComponentHub | 8880 |
+  | SiteWatch | 8881 |
+  | PhotoHub | 8882 |
+  | LanAtlas | 8883 |
 
 ## 4. Versionnage du protocole
 

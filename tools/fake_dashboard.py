@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-fake_dashboard.py — testeur de morfBeacon cote superviseur.
+fake_dashboard.py - testeur de morfBeacon cote superviseur.
 
 Reproduit ce que fera morfDashboard, sans dependance externe (stdlib
 uniquement) :

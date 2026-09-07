@@ -1,5 +1,5 @@
 /*
- * morfBeacon — exemple de demonstration
+ * morfBeacon - exemple de demonstration
  * Copyright (C) 2026 morfredus
  * SPDX-License-Identifier: GPL-3.0-only
  *
@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     //
     // Un observateur (morfMonitor) decouvre ainsi l'application, voit qu'elle
     // annonce « web_ui », interroge /status une fois, et peut proposer un lien
-    // — sans rien connaitre de DemoApp.
+    // - sans rien connaitre de DemoApp.
     cfg.webUiPath        = QStringLiteral("/");
     cfg.webUiLabel       = QStringLiteral("Demo morfBeacon");
     cfg.webUiDescription = QStringLiteral("Page d'exemple servie par la demo.");
