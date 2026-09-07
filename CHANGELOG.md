@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.7.1] - 2026-09-07
+
+### Fixed
+
+- **The `/status` server no longer starves the heartbeat while replying to a slow
+  client.** `reply()` ended with a synchronous `while (bytesToWrite) waitForBytesWritten(2000)`
+  drain that blocked the single event loop until a slow peer had absorbed a rich
+  `/status` (~20 KB). On a degraded link the block lasted, and during it the beacon
+  `QTimer` (same event loop) could not emit: the service silently stopped announcing
+  its presence while it was in fact running, triggering false "service down" alerts
+  across the parc. Replies now close **asynchronously** (`disconnectFromHost()` drains
+  in the background, then `disconnected` → `deleteLater`), with a 10 s guard that
+  aborts a dead client's socket so half-closed sockets never accumulate during a
+  network degradation. **Vendored copies must be resynced** (`sync-morf`) and the
+  consuming services rebuilt for the fix to reach them.
+
 ## [0.7.0] - 2026-08-16
 
 ### Added
