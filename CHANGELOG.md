@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.8.0] - 2026-10-15
+
+### Added
+
+- `IMetricsProvider::activity()` (default `{}`) and an optional `activity` callback in
+  `FunctionMetricsProvider`: `/status` now carries the generic `activity/1` object when a
+  service declares one. Additive: services that do not override it are unchanged.
+  **Vendored copies must be resynced** (`sync-morf`) to benefit from it.
+
 ## [0.7.2] - 2026-09-27
 
 ### Fixed
