@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.8.1] - 2026-11-07
+
+### Fixed
+
+- **Incomplete connections no longer pile up.** `StatusServer` now aborts a connection that
+  has not delivered its full request headers within 5 s, so a client that opens a socket and
+  stays silent cannot hold a descriptor forever.
+- **Arduino emitter: JSON escaping in `buildStatusJson()`.** `app`, `host`, `role`, `version`,
+  `state`, `web_ui.path`, `label` and `description` were concatenated raw; a quote in any of
+  them produced an invalid `/status` document. They now go through `Emitter::escape()`
+  (now public), like the heartbeat datagram. The Qt side already used `QJsonObject`.
+  **Vendored copies must be resynced** (`sync-morf`).
+
 ## [0.8.0] - 2026-10-15
 
 ### Added
